@@ -1,0 +1,27 @@
+{
+  "name": "amazon",
+  "type": "module",
+  "description": "Lionel's Playwright project",
+  "main": "index.js",
+  "keywords": [
+    "playwright",
+    "playwright-test",
+    "allure report",
+    "web test automation"
+  ],
+  "devDependencies": {
+    "@playwright/test": "^1.38.1",
+    "allure-commandline": "^2.24.0",
+    "allure-playwright": "^2.8.1",
+    "lighthouse": "11.1.0",
+    "playwright": "^1.38.1",
+    "playwright-lighthouse": "3.1.0",
+    "typescript": "^5.2.2",
+    "csv-parse": "^5.5.2"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.1.0",
+    "dotenv": "^16.3.1",
+    "rimraf": "^5.0.1"
+  }
+}

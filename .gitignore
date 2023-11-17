@@ -1,0 +1,5 @@
+allure*
+node_modules/
+playwright-report/
+*-results/
+.idea/

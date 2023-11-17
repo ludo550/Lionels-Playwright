@@ -1,0 +1,34 @@
+import { test, expect } from '@playwright/test';
+import { AmazonPage } from './pageobjects/amazon-page';
+import fs from 'fs';
+import path from 'path';
+import { parse } from 'csv-parse/sync';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const data = parse(fs.readFileSync(path.join(__dirname, 'data', 'testData.csv')), {
+  columns: true,
+  skip_empty_lines: true
+});
+
+for (const line of data) {
+    test('Compare search price vs product price for url ' + line.url + ' and product type of '  + line.productType, async ({ page }) => {
+      const amazonPage = new AmazonPage(page);
+      await amazonPage.goto(line.url);
+      await expect(amazonPage.search.first()).toBeVisible();
+      await amazonPage.searchProduct(line.productType);
+      let searchPrice = await amazonPage.searchPrice.first().textContent();
+      searchPrice = searchPrice.split(" ")[0].trim();
+      await amazonPage.openProduct();
+      let productPrice = await amazonPage.productPrice().nth(-1).textContent();
+      console.log("Search Price: " + searchPrice);
+      console.log("Product Price: " + productPrice);
+      productPrice = productPrice.split("with")[0].trim();
+      if (productPrice.includes(".00") && !searchPrice.includes(".")) {
+         searchPrice = searchPrice + ".00"
+      }
+      await expect(productPrice).toEqual(searchPrice);
+    });
+}
