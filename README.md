@@ -9,7 +9,7 @@
 
     npm install
 
-#### **Install Playwright and OS compatible browsers **
+#### **Install Playwright and OS compatible browsers that are configured in playwright.config.ts **
 
     npx playwright install
 
