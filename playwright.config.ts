@@ -8,6 +8,9 @@ const config: AmazonTestConfig = {
 
   testDir: './tests',
 
+  // Global teardown. Global setup needed n this case is automatic.
+  globalTeardown: './tests/global-teardown.ts',
+
   /* Maximum time one test can run for. */
   timeout: 100 * 1000,
 
@@ -43,7 +46,7 @@ const config: AmazonTestConfig = {
   use: {
     screenshot: 'on',
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-    actionTimeout: 0,
+    actionTimeout: 100000,
 
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'https://www.amazon.com',
