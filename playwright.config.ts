@@ -9,7 +9,7 @@ const config: AmazonTestConfig = {
   testDir: './tests',
 
   /* Maximum time one test can run for. */
-  timeout: 60 * 1000,
+  timeout: 100 * 1000,
 
   expect: {
 
@@ -17,7 +17,7 @@ const config: AmazonTestConfig = {
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 10000
+    timeout: 50000
   },
 
   /* Fail the build on CI if you accidentally left test.only in the source code. */

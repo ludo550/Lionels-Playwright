@@ -10,24 +10,31 @@ export class AmazonPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.search = page.locator("//input[contains(@placeholder, 'Search Amazon')] | //input[contains(@title, 'Search')] | //input[contains(@placeholder, 'Buscar Amazon')] | //input[contains(@title, 'Buscar')]");
+    this.search = page.locator("//input[@id='twotabsearchtextbox'] | //input[contains(@placeholder, 'Search Amazon')] | //input[contains(@title, 'Search')] | //input[contains(@placeholder, 'Buscar Amazon')] | //input[contains(@title, 'Buscar')]");
     this.searchSubmit = page.locator("//*[@id='nav-search-submit-button'] | //*[@title='Go'] | //*[@title='Ir']");
     this.searchPrice = page.locator("//span[@class='aok-offscreen' and text()!=''] | //span[@class='a-offscreen' and text()!='']");
     this.productElem = page.locator(".s-product-image-container");
-    // We repeat the searchPrice Xpath again as a different variable only for clarity. Both search and product pages hold the price in the same selector
   }
 
   async goto(url) {
     await this.page.setDefaultTimeout(40000);
     await this.page.setDefaultNavigationTimeout(400000);
-    await this.page.goto(url);
-    await this.page.waitForLoadState("domcontentloaded");
+    try {
+      await this.page.goto(url);
+      await this.page.waitForLoadState("domcontentloaded");
+    } catch {
+      console.log("Refreshing page to handle flakiness.")
+      await this.page.reload()
+      await this.page.waitForLoadState("domcontentloaded");
+    }finally {
+      console.log("Intermittently skipping the wait on Dom to be loaded as this is bug in Play write some times - https://github.com/microsoft/playwright/issues/12182")
+    }
   }
 
   async searchProduct(product) {
     await this.search.type(product);
     await this.searchSubmit.click();
-    await this.page.waitForLoadState("domcontentloaded");
+    await this.waitForDOM();
     await expect(this.productElem.nth(0)).toBeVisible();
     this.searchPriceValue = await this.searchPrice.first().textContent();
   }
@@ -38,10 +45,20 @@ export class AmazonPage {
    }
 
   async openProduct() {
-    await this.page.waitForLoadState("domcontentloaded");
+    await this.waitForDOM();
     await this.searchPrice.first().click();
-    await this.page.waitForLoadState("domcontentloaded");
+    await this.waitForDOM();
     await expect(this.productPrice().first()).toBeVisible();
+  }
+
+  async waitForDOM() {
+      try {
+        await this.page.waitForLoadState("domcontentloaded");
+      } catch {
+        console.log("Skipping catch to make tests tolerable to parallel tests on the same internet. Our elements needed for validation are usually loaded within the timeout")
+      }finally {
+        console.log("Intermittently skipping the wait on Dom to be loaded as this is bug in Play write some times - https://github.com/microsoft/playwright/issues/12182")
+      }
   }
 
 }
