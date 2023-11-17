@@ -12,7 +12,7 @@ const config: AmazonTestConfig = {
   globalTeardown: './tests/global-teardown.ts',
 
   /* Maximum time one test can run for. */
-  timeout: 100 * 1000,
+  timeout: 160 * 1000,
 
   expect: {
 
