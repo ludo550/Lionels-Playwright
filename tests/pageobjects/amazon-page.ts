@@ -41,7 +41,7 @@ export class AmazonPage {
 
   protected productPrice(): () => Locator {
     const price = this.searchPriceValue.split(".00")[0]
-    return this.page.locator("//span[@class='aok-offscreen' and contains(text(), '" + price + "')] | //span[@class='a-offscreen' and contains(text(), '" + price + "')] | //td[text()='Price:']/following-sibling::td[1]//span[1]/span[2] | //td[text()='Precio:']/following-sibling::td[1]//span[1]/span[2]")
+    return this.page.locator("//span[@class='aok-offscreen' and contains(text(), '" + price + "')] | //span[@id='price' and contains(text(), '" + price + "')] | //span[@class='header-price' and contains(text(), '" + price + "')] | //span[@class='a-offscreen' and contains(text(), '" + price + "')] | //td[text()='Price:']/following-sibling::td[1]//span[1]/span[2] | //td[text()='Precio:']/following-sibling::td[1]//span[1]/span[2]")
    }
 
   async openProduct() {
