@@ -23,12 +23,12 @@ for (const line of data) {
       searchPrice = searchPrice.split(" ")[0].trim();
       await amazonPage.openProduct();
       let productPrice = await amazonPage.productPrice().nth(-1).textContent();
-      console.log("Search Price: " + searchPrice);
-      console.log("Product Price: " + productPrice);
       productPrice = productPrice.split("with")[0].trim();
       if (productPrice.includes(".00") && !searchPrice.includes(".")) {
          searchPrice = searchPrice + ".00"
       }
+      console.log("Search Price: " + searchPrice);
+      console.log("Product Price: " + productPrice);
       await expect(productPrice).toEqual(searchPrice);
     });
 }
