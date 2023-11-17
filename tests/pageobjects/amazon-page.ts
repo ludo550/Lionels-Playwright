@@ -27,7 +27,7 @@ export class AmazonPage {
       await this.page.reload()
       await this.page.waitForLoadState("domcontentloaded");
     }finally {
-      console.log("Intermittently skipping the wait on Dom to be loaded as this is bug in Play write some times - https://github.com/microsoft/playwright/issues/12182")
+      console.log("Intermittently skipping the wait on Dom to be loaded as this is a bug in Play write some times - https://github.com/microsoft/playwright/issues/12182")
     }
   }
 
@@ -57,7 +57,7 @@ export class AmazonPage {
       } catch {
         console.log("Skipping catch to make tests tolerable to parallel tests on the same internet. Our elements needed for validation are usually loaded within the timeout")
       }finally {
-        console.log("Intermittently skipping the wait on Dom to be loaded as this is bug in Play write some times - https://github.com/microsoft/playwright/issues/12182")
+        console.log("Intermittently skipping the wait on Dom to be loaded as this is a bug in Play write some times - https://github.com/microsoft/playwright/issues/12182")
       }
   }
 
