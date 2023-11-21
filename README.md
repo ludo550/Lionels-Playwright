@@ -37,6 +37,6 @@
 
     npx playwright show-report
 
-#### **Test data for url and amazon product type is location**
+#### **Test data for url and amazon product type location**
 
     tests/data 
