@@ -9,6 +9,9 @@
     "allure report",
     "web test automation"
   ],
+  "scripts": {
+    "test": "npx playwright test --project=chromium"
+  }
   "devDependencies": {
     "@playwright/test": "^1.38.1",
     "allure-commandline": "^2.24.0",
