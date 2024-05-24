@@ -2,7 +2,7 @@ name: Lionels Playwright
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   tests:
